@@ -11,6 +11,7 @@ $name = ltrim(urldecode($_SERVER['REQUEST_URI']), '/');
 if ($name)
 {
   include './image.php';
+  include './mp4.php';
   exit(0);
 }
 if (isset($_POST['publish']) && isset($_POST['name']) && isset($_FILES['file']))
