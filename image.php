@@ -11,16 +11,21 @@ if ($claim)
   if (isset($getResult['completed']) && $getResult['completed'] && isset($getResult['download_path']))
   {
     $path = $getResult['download_path'];
-   $validType = isset($getResult['content_type']) && in_array($getResult['content_type'], ['image/jpeg', 'image/mp4']);
+   $validType = isset($getResult['content_type']) && in_array($getResult['content_type'], ['image/jpeg', 'video/mp4']);
     if ($validType){
-    $image = isset($getResult['content_type']);
+    $image = isset($getResult['content_type']) && in_array($getResult['content_type'], ['image/jpeg']);
+    $mp4 = isset($getResult['content_type']) && in_array($getResult['content_type'], ['video/mp3']);
       if ($image) {
         header('Content-type: image/jpeg');
         header('Content-length: ' . filesize($path));
         readfile($getResult['download_path']);
-      }
-      exit(0); // launches mp4.php
-      } //endif image
+        elseif ($mp4) {
+        header('Content-type: video/mp4');
+        header('Content-length: ' . filesize($path));
+        readfile($getResult['download_path']);  
+        }
+        
+      } //endif image/mp4
         
     }//endif validType
   }
